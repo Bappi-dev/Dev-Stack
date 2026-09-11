@@ -39,7 +39,7 @@ const Footer = () => {
                     </div>
                     <div className="mx-8 border-b border-gray-200"></div>
                 </div>
-                <div className="mx-8 border-b border-gray-200"></div>
+                <div className="mx-12 border-b border-gray-200"></div>
                 <div className='flex justify-between gap-4 items-center container mx-auto py-6'>
                     <p>© 2026 Dev Stack. All rights reserved.</p>
                     <div className='flex gap-4 items-center'>
