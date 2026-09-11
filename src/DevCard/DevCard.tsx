@@ -17,10 +17,9 @@ const DevCard = ({ cardPromise }: IcardType) => {
             </div>
             {/* side items */}
             <div className="col-span-3 border border-gray-200 h-50 rounded-2xl">
-               <div className="py-2 space-y-2">
+               <div className="py-2">
                   <h2 className="text-2xl font-bold px-5">Your Stack</h2>
-                  <p className="px-5 text-gray-400 ">No technologies selected yet.</p>
-               
+                  <p className="px-5 text-gray-300 ">No technologies selected yet.</p>
                </div>
 
             </div>

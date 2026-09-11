@@ -8,7 +8,7 @@ import type { ICard } from "../type";
 const CardSection = ({ cardPromise }: IcardType) => {
     // console.log(cardPromise);
     const cards = use(cardPromise)
-    console.log(cards);
+    
     return <div className="grid grid-cols-3 container mx-auto gap-4">
         {
             cards.map((card: ICard) => {

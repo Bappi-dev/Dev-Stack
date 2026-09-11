@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 import Banner from "./components/Banner"
 import Navbar from "./components/Navbar"
-import CardSection from "./DevCard/CardSection"
 import type { ICard } from "./type"
 import DevCard from "./DevCard/DevCard"
 import Footer from "./components/Footer"
