@@ -24,7 +24,6 @@ const YourStack = ({
       {isSelected.length === 0 ? (
         <>
           <p className="text-gray-400">
-            
             No technologies selected yet.
           </p>
           <div className="border border-dotted border-gray-400 mt-4 text-center p-8 rounded-3xl">
@@ -69,7 +68,7 @@ const YourStack = ({
           }
           <button onClick={() => setIsSelected([])} className="text-center cursor-pointer border border-red-200 font-semibold px-16 py-1 text-xl rounded-lg text-red-600">Remove All</button>
         </div>
-        
+
       )}
     </div>
 
