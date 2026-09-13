@@ -1,19 +1,36 @@
-import { use } from "react";
+import { use, type Dispatch, type SetStateAction } from "react";
 import type { ICard } from "../type";
+import { Bounce, toast } from "react-toastify";
+import { AiOutlineCheck } from "react-icons/ai";
 
- export interface IcardType {
+export interface IcardType {
     cardPromise: Promise<ICard[]>
+    isSelected: ICard[]
+    setIsSelected: Dispatch<SetStateAction<ICard[]>>
 }
 
-const CardSection = ({ cardPromise }: IcardType) => {
+const CardSection = ({ cardPromise, isSelected, setIsSelected }: IcardType) => {
     // console.log(cardPromise);
     const cards = use(cardPromise)
-    
-    return <div className="grid grid-cols-3 container mx-auto gap-4">
+    const handleSelectedProps = (card: ICard) => {
+        setIsSelected([...isSelected, card]);
+        toast.success("selected the card", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+        });
+    };
+    return <div className="grid grid-cols-1 lg:grid-cols-3 container mx-auto gap-4">
         {
             cards.map((card: ICard) => {
                 return (
-                    <div className="  border border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:scale-105 transition duration-300">
+                    <div key={card.id} className="  border border-gray-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md hover:scale-105 transition duration-300 disabled:border-red-400">
 
                         {/* Icon */}
                         <div className="mb-4 flex justify-between">
@@ -23,13 +40,13 @@ const CardSection = ({ cardPromise }: IcardType) => {
                                 className="w-10 h-10 object-contain"
                             />
                             <p className={`
-                                ${card.badge == "Popular" && "border border-gray-300  rounded-4xl p-2 bg-red-50 px-6 text-red-600" }
-                                ${card.badge == "Essential" && " border border-gray-400 rounded-4xl p-2 bg-green-50 px-6 text-green-600" }
-                                ${card.badge == "Recommended" && "border border-gray-400 rounded-4xl p-2 bg-blue-100 px-6 text-blue-600" }
-                                ${card.badge == "Trending" && "border border-gray-400 rounded-4xl bg-[#deecf3] p-2 bg-[] px-6 text-[#0284C7]" }
-                                ${card.badge == "Powerful" && "border border-gray-400 rounded-4xl p-2 bg-[] px-6 text-[#0891B2]" }
-                                ${card.badge == "Lightweight" && "border border-gray-400 rounded-4xl bg-[#cfdfe4] p-2  px-6 text-[#0891B2]" }
-                                ${card.badge == "Professional" && "border border-gray-400 rounded-4xl bg-[#cfdfe4] p-2  px-6 text-black" }
+                                ${card.badge == "Popular" && "border border-gray-300  rounded-4xl p-2 bg-red-50 px-6 text-red-600"}
+                                ${card.badge == "Essential" && " border border-gray-400 rounded-4xl p-2 bg-green-50 px-6 text-green-600"}
+                                ${card.badge == "Recommended" && "border border-gray-400 rounded-4xl p-2 bg-blue-100 px-6 text-blue-600"}
+                                ${card.badge == "Trending" && "border border-gray-400 rounded-4xl bg-[#deecf3] p-2 bg-[] px-6 text-[#0284C7]"}
+                                ${card.badge == "Powerful" && "border border-gray-400 rounded-4xl p-2 bg-[] px-6 text-[#0891B2]"}
+                                ${card.badge == "Lightweight" && "border border-gray-400 rounded-4xl bg-[#cfdfe4] p-2  px-6 text-[#0891B2]"}
+                                ${card.badge == "Professional" && "border border-gray-400 rounded-4xl bg-[#cfdfe4] p-2  px-6 text-black"}
                                 `}>{card.badge}</p>
                         </div>
 
@@ -60,8 +77,25 @@ const CardSection = ({ cardPromise }: IcardType) => {
                         </div>
 
                         {/* Button */}
-                        <button className="w-full bg-[#111827] text-white text-sm py-2 rounded-lg hover:bg-gray-800 transition">
-                            Add to Stack
+                        <button
+                            onClick={() => handleSelectedProps(card)}
+                            disabled={
+                                isSelected.filter((item) => item.id === card.id).length > 0
+                            }
+                            className="w-full bg-[#111827] text-white cursor-pointer py-2  rounded-lg
+                             border border-transparent
+                            hover:bg-gray-800 transition
+                            disabled:bg-red-600"
+                        >
+                            {isSelected.filter((item) => item.id === card.id).length > 0
+                                ? (
+                                    <div className="flex items-center justify-center gap-1">
+                                        <AiOutlineCheck />
+                                        Added to Stack
+                                    </div>
+                                ) : (
+                                    "Add to Stack"
+                                )}
                         </button>
 
                     </div>
